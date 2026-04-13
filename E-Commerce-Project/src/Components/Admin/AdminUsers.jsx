@@ -21,7 +21,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('https://e-commerce-project-backend-fq6y.onrender.com/admin/users', {
+      const res = await axios.get('https://e-commerceweb-back.onrender.com/admin/users', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -37,7 +37,7 @@ const AdminUsers = () => {
   const toggleStatus = async (userId, currentStatus) => {
     try {
       const token = localStorage.getItem('token')
-      await axios.put(`https://e-commerce-project-backend-fq6y.onrender.com/admin/user/status/${userId}`, 
+      await axios.put(`https://e-commerceweb-back.onrender.com/admin/user/status/${userId}`, 
         { active: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -56,7 +56,7 @@ const AdminUsers = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`https://e-commerce-project-backend-fq6y.onrender.com/admin/user/${confirmModal.userId}`, {
+      await axios.delete(`https://e-commerceweb-back.onrender.com/admin/user/${confirmModal.userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setUsers(users.filter(u => u.id !== confirmModal.userId))
@@ -204,3 +204,5 @@ const AdminUsers = () => {
 }
 
 export default AdminUsers
+
+

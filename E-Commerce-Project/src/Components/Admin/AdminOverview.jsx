@@ -14,7 +14,7 @@ const AdminOverview = () => {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('https://e-commerce-project-backend-fq6y.onrender.com/admin/dashboard', {
+      const response = await axios.get('https://e-commerceweb-back.onrender.com/admin/dashboard', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (response.data.success) {
@@ -78,3 +78,5 @@ const AdminOverview = () => {
 }
 
 export default AdminOverview
+
+

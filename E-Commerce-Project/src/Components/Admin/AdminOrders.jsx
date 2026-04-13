@@ -20,7 +20,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('https://e-commerce-project-backend-fq6y.onrender.com/admin/orders', {
+      const res = await axios.get('https://e-commerceweb-back.onrender.com/admin/orders', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -36,7 +36,7 @@ const AdminOrders = () => {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem('token')
-      await axios.put(`https://e-commerce-project-backend-fq6y.onrender.com/admin/order/status/${orderId}`, 
+      await axios.put(`https://e-commerceweb-back.onrender.com/admin/order/status/${orderId}`, 
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -162,3 +162,5 @@ const AdminOrders = () => {
 }
 
 export default AdminOrders
+
+

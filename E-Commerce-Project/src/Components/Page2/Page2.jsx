@@ -13,7 +13,7 @@ const Page2 = () => {
   const [quantities, setQuantities] = useState({})
   const [toast, setToast] = useState(null)
 
-  const API_BASE_URL = 'https://e-commerce-project-backend-fq6y.onrender.com/products'
+  const API_BASE_URL = 'https://e-commerceweb-back.onrender.com/products'
 
   // Toast notification auto-hide after 4 seconds
   useEffect(() => {
@@ -347,3 +347,4 @@ const Page2 = () => {
 }
 
 export default Page2
+

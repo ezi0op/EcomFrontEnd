@@ -55,7 +55,7 @@ const Register = () => {
 
     setLoading(true)
     try {
-      const res = await axios.post('https://e-commerce-project-backend-fq6y.onrender.com/auth/register', {
+      const res = await axios.post('https://e-commerceweb-back.onrender.com/auth/register', {
         name:     formData.name,
         email:    formData.email,
         password: formData.password,
@@ -277,3 +277,5 @@ const Register = () => {
 }
 
 export default Register
+
+

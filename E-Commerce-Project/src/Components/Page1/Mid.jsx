@@ -36,7 +36,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
   const [compareResult, setCompareResult] = useState('')
   const [compareLoading, setCompareLoading] = useState(false)
 
-  const API_BASE_URL = 'https://e-commerce-project-backend-fq6y.onrender.com/products'
+  const API_BASE_URL = 'https://e-commerceweb-back.onrender.com/products'
 
   const userId = localStorage.getItem('userId')
   const token = localStorage.getItem('token')
@@ -160,7 +160,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
     setAddingToCart(prev => ({ ...prev, [product.id]: true }))
     try {
       const response = await axios.post(
-        'https://e-commerce-project-backend-fq6y.onrender.com/cart/add',
+        'https://e-commerceweb-back.onrender.com/cart/add',
         { userId: parseInt(userId), productId: product.id, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -192,7 +192,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
     setAddingToCart(prev => ({ ...prev, [product.id]: true }))
     try {
       const response = await axios.post(
-        'https://e-commerce-project-backend-fq6y.onrender.com/cart/add',
+        'https://e-commerceweb-back.onrender.com/cart/add',
         { userId: parseInt(userId), productId: product.id, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -230,7 +230,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
   }
 
   // ── AI helpers ──────────────────────────────────────────────────────────────
-  const AI_BASE = 'https://e-commerce-project-backend-fq6y.onrender.com/ai'
+  const AI_BASE = 'https://e-commerceweb-back.onrender.com/ai'
 
   const openAiModal = async (product) => {
     setAiModal(product)
@@ -280,10 +280,15 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
     setCompareLoading(true)
     setCompareResult('')
     try {
-      const res = await axios.get(`${AI_BASE}/compare/${compareList[0].id}/${compareList[1].id}`)
+      const id1 = compareList[0].id
+      const id2 = compareList[1].id
+      console.log('Comparing products:', id1, id2)
+      const res = await axios.get(`${AI_BASE}/compare/${id1}/${id2}`)
       setCompareResult(res.data.data ?? res.data)
-    } catch {
-      setCompareResult('Could not compare products. Please try again.')
+    } catch (err) {
+      console.error('AI Compare Error:', err.response?.data || err.message)
+      const errorMsg = err.response?.data?.message || err.message || 'Could not compare products. Please try again.'
+      setCompareResult(`Error: ${errorMsg}`)
     } finally {
       setCompareLoading(false)
     }
@@ -881,3 +886,5 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
 }
 
 export default Mid
+
+

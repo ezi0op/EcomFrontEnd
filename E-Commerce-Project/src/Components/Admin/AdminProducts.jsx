@@ -32,7 +32,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('https://e-commerce-project-backend-fq6y.onrender.com/admin/products', {
+      const res = await axios.get('https://e-commerceweb-back.onrender.com/admin/products', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -52,7 +52,7 @@ const AdminProducts = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`https://e-commerce-project-backend-fq6y.onrender.com/admin/product/${confirmModal.productId}`, {
+      await axios.delete(`https://e-commerceweb-back.onrender.com/admin/product/${confirmModal.productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setProducts(products.filter(p => p.id !== confirmModal.productId))
@@ -71,11 +71,11 @@ const AdminProducts = () => {
       const payload = { ...formData, price: Number(formData.price), quantity: Number(formData.quantity) }
       
       if (editingProduct) {
-        await axios.put(`https://e-commerce-project-backend-fq6y.onrender.com/admin/product/${editingProduct.id}`, payload, {
+        await axios.put(`https://e-commerceweb-back.onrender.com/admin/product/${editingProduct.id}`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         })
       } else {
-        await axios.post('https://e-commerce-project-backend-fq6y.onrender.com/admin/product', payload, {
+        await axios.post('https://e-commerceweb-back.onrender.com/admin/product', payload, {
           headers: { Authorization: `Bearer ${token}` }
         })
       }
@@ -290,3 +290,5 @@ const AdminProducts = () => {
 }
 
 export default AdminProducts
+
+

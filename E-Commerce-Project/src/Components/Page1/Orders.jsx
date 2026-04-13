@@ -31,7 +31,7 @@ const Orders = () => {
     try {
       setLoading(true)
       setError('')
-      const response = await axios.get(`https://e-commerce-project-backend-fq6y.onrender.com/orders/user/${userId}`, {
+      const response = await axios.get(`https://e-commerceweb-back.onrender.com/orders/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (response.data.success && response.data.data) {
@@ -61,7 +61,7 @@ const Orders = () => {
     setCancelConfirmId(null)
     try {
       const response = await axios.put(
-        `https://e-commerce-project-backend-fq6y.onrender.com/orders/${orderId}/cancel`,
+        `https://e-commerceweb-back.onrender.com/orders/${orderId}/cancel`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -456,3 +456,5 @@ const Orders = () => {
 }
 
 export default Orders
+
+

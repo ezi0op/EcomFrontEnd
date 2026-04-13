@@ -31,7 +31,7 @@ const AdminCoupons = () => {
   const fetchCoupons = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('https://e-commerce-project-backend-fq6y.onrender.com/admin/coupons', {
+      const res = await axios.get('https://e-commerceweb-back.onrender.com/admin/coupons', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -74,7 +74,7 @@ const AdminCoupons = () => {
         expiryDate: formData.expiryDate + 'T23:59:59' // Append time to make it LocalDateTime compatible if backend expects it, or LocalDate handles format YYYY-MM-DD
       }
 
-      const res = await axios.post('https://e-commerce-project-backend-fq6y.onrender.com/admin/coupon', payload, {
+      const res = await axios.post('https://e-commerceweb-back.onrender.com/admin/coupon', payload, {
         headers: { Authorization: `Bearer ${token}` }
       })
 
@@ -96,7 +96,7 @@ const AdminCoupons = () => {
   const handleToggleStatus = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`https://e-commerce-project-backend-fq6y.onrender.com/admin/coupon/${id}/toggle`, {}, {
+      const res = await axios.put(`https://e-commerceweb-back.onrender.com/admin/coupon/${id}/toggle`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -118,7 +118,7 @@ const AdminCoupons = () => {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`https://e-commerce-project-backend-fq6y.onrender.com/admin/coupon/${increaseModal.id}/increase-limit/${amount}`, {}, {
+      const res = await axios.put(`https://e-commerceweb-back.onrender.com/admin/coupon/${increaseModal.id}/increase-limit/${amount}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -134,7 +134,7 @@ const AdminCoupons = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.delete(`https://e-commerce-project-backend-fq6y.onrender.com/admin/coupon/${id}`, {
+      const res = await axios.delete(`https://e-commerceweb-back.onrender.com/admin/coupon/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -339,3 +339,5 @@ const AdminCoupons = () => {
 }
 
 export default AdminCoupons
+
+

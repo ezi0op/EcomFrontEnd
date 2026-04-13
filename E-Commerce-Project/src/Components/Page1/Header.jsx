@@ -20,7 +20,7 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => {}, hideSearch = 
 
     // Security check: ensure user is still active in the database
     if (token && userId) {
-      axios.get(`https://e-commerce-project-backend-fq6y.onrender.com/users/${userId}`, {
+      axios.get(`https://e-commerceweb-back.onrender.com/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       }).then(res => {
         if (res.data?.data && res.data.data.active === false) {
@@ -234,3 +234,5 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => {}, hideSearch = 
 }
 
 export default Header
+
+

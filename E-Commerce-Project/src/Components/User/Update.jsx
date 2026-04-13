@@ -36,7 +36,7 @@ const Update = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`https://e-commerce-project-backend-fq6y.onrender.com/users/${userId}`, {
+      const res = await axios.get(`https://e-commerceweb-back.onrender.com/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       const u = res.data.data
@@ -98,7 +98,7 @@ const Update = () => {
     try {
       // PUT /users/update/{id}  → UpdateUserDTO: name, address, mobile, image ONLY
       const res = await axios.put(
-        `https://e-commerce-project-backend-fq6y.onrender.com/users/update/${userId}`,
+        `https://e-commerceweb-back.onrender.com/users/update/${userId}`,
         { name: form.name, address: form.address, mobile: form.mobile, image: form.image },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -376,3 +376,4 @@ const Update = () => {
 }
 
 export default Update
+
