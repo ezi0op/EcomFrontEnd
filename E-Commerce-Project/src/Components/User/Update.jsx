@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { BASE_URL } from '../../config'
 import {
   ArrowLeft, User, Phone, MapPin, Camera, Save, Edit2,
   Mail, Shield, CheckCircle, XCircle, Lock, Link
@@ -36,7 +37,7 @@ const Update = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`https://e-commerceweb-back.onrender.com/users/${userId}`, {
+      const res = await axios.get(`${BASE_URL}/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       const u = res.data.data
@@ -98,7 +99,7 @@ const Update = () => {
     try {
       // PUT /users/update/{id}  → UpdateUserDTO: name, address, mobile, image ONLY
       const res = await axios.put(
-        `https://e-commerceweb-back.onrender.com/users/update/${userId}`,
+        `${API_URL}/users/update/${userId}`,
         { name: form.name, address: form.address, mobile: form.mobile, image: form.image },
         { headers: { Authorization: `Bearer ${token}` } }
       )

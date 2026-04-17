@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL;
 import { useNavigate } from 'react-router-dom'
 import { Eye, EyeOff, Mail, Lock, ShoppingBag, Zap, Shield, Truck } from 'lucide-react'
 
@@ -28,7 +29,7 @@ const Login = () => {
     if (!guestCart.length) return
     await Promise.allSettled(
       guestCart.map(item =>
-        axios.post('https://e-commerceweb-back.onrender.com/cart/add',
+        axios.post(`${API_URL}/cart/add`,
           { userId: parseInt(userId), productId: item.productId, quantity: item.quantity },
           { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -42,7 +43,7 @@ const Login = () => {
     setError('')
     setLoading(true)
     try {
-      const res = await axios.post('https://e-commerceweb-back.onrender.com/auth/login', {
+      const res = await axios.post(`${API_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
       })

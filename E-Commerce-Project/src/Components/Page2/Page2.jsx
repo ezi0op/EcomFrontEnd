@@ -13,7 +13,7 @@ const Page2 = () => {
   const [quantities, setQuantities] = useState({})
   const [toast, setToast] = useState(null)
 
-  const API_BASE_URL = 'https://e-commerceweb-back.onrender.com/products'
+  const API_BASE_URL = `${import.meta.env.VITE_API_URL}/products`
 
   // Toast notification auto-hide after 4 seconds
   useEffect(() => {

@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL;
 
 const Header = ({ searchKeyword = '', setSearchKeyword = () => {}, hideSearch = false, adminView, setAdminView }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
@@ -20,7 +21,7 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => {}, hideSearch = 
 
     // Security check: ensure user is still active in the database
     if (token && userId) {
-      axios.get(`https://e-commerceweb-back.onrender.com/users/${userId}`, {
+      axios.get(`${API_URL}/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       }).then(res => {
         if (res.data?.data && res.data.data.active === false) {
