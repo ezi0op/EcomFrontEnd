@@ -13,7 +13,7 @@ const Page2 = () => {
   const [quantities, setQuantities] = useState({})
   const [toast, setToast] = useState(null)
 
-  const API_BASE_URL = 'https://e-commerceweb-back.onrender.com/products'
+  const API_BASE_URL = 'http://13.53.206.121:8080/products'
 
   // Toast notification auto-hide after 4 seconds
   useEffect(() => {

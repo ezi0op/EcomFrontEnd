@@ -28,7 +28,7 @@ const Login = () => {
     if (!guestCart.length) return
     await Promise.allSettled(
       guestCart.map(item =>
-        axios.post('https://e-commerceweb-back.onrender.com/cart/add',
+        axios.post('http://13.53.206.121:8080/cart/add',
           { userId: parseInt(userId), productId: item.productId, quantity: item.quantity },
           { headers: { Authorization: `Bearer ${token}` } }
         )
@@ -42,7 +42,7 @@ const Login = () => {
     setError('')
     setLoading(true)
     try {
-      const res = await axios.post('https://e-commerceweb-back.onrender.com/auth/login', {
+      const res = await axios.post('http://13.53.206.121:8080/auth/login', {
         email: formData.email,
         password: formData.password,
       })

@@ -14,7 +14,7 @@ const AdminOverview = () => {
   const fetchStats = async () => {
     try {
       const token = localStorage.getItem('token')
-      const response = await axios.get('https://e-commerceweb-back.onrender.com/admin/dashboard', {
+      const response = await axios.get('http://13.53.206.121:8080/admin/dashboard', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (response.data.success) {

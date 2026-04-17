@@ -55,7 +55,7 @@ const Register = () => {
 
     setLoading(true)
     try {
-      const res = await axios.post('https://e-commerceweb-back.onrender.com/auth/register', {
+      const res = await axios.post('http://13.53.206.121:8080/auth/register', {
         name:     formData.name,
         email:    formData.email,
         password: formData.password,

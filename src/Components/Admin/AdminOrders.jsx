@@ -20,7 +20,7 @@ const AdminOrders = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('https://e-commerceweb-back.onrender.com/admin/orders', {
+      const res = await axios.get('http://13.53.206.121:8080/admin/orders', {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -36,7 +36,7 @@ const AdminOrders = () => {
   const handleStatusChange = async (orderId, newStatus) => {
     try {
       const token = localStorage.getItem('token')
-      await axios.put(`https://e-commerceweb-back.onrender.com/admin/order/status/${orderId}`, 
+      await axios.put(`http://13.53.206.121:8080/admin/order/status/${orderId}`, 
         { status: newStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       )

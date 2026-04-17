@@ -144,7 +144,7 @@ const Cart = () => {
   // Fetch Razorpay Key ID from backend
   const fetchRazorpayConfig = async () => {
     try {
-      const res = await axios.get('https://e-commerceweb-back.onrender.com/payment/config', {
+      const res = await axios.get('http://13.53.206.121:8080/payment/config', {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       if (res.data.success) setRazorpayKeyId(res.data.data.keyId)
@@ -159,7 +159,7 @@ const Cart = () => {
     try {
       setLoading(true)
       setError('')
-      const res = await axios.get(`https://e-commerceweb-back.onrender.com/cart/user/${userId}`, {
+      const res = await axios.get(`http://13.53.206.121:8080/cart/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success && res.data.data) {
@@ -177,7 +177,7 @@ const Cart = () => {
 
   const fetchTotal = async () => {
     try {
-      const res = await axios.get(`https://e-commerceweb-back.onrender.com/cart/total/${userId}`, {
+      const res = await axios.get(`http://13.53.206.121:8080/cart/total/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) setTotal(res.data.data || 0)
@@ -187,7 +187,7 @@ const Cart = () => {
   // Public endpoint — get product images/names
   const fetchProductMap = async () => {
     try {
-      const res = await fetch('https://e-commerceweb-back.onrender.com/products?size=1000')
+      const res = await fetch('http://13.53.206.121:8080/products?size=1000')
       const data = await res.json()
       const map = {}
       const items = data.data?.content || data.data || []
@@ -215,7 +215,7 @@ const Cart = () => {
     setUpdating(prev => ({ ...prev, [cartItemId]: true }))
     try {
       const res = await axios.put(
-        `https://e-commerceweb-back.onrender.com/cart/update/${cartItemId}`,
+        `http://13.53.206.121:8080/cart/update/${cartItemId}`,
         { quantity: newQty },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -234,7 +234,7 @@ const Cart = () => {
       return
     }
     try {
-      const res = await axios.delete(`https://e-commerceweb-back.onrender.com/cart/remove/${cartItemId}`, {
+      const res = await axios.delete(`http://13.53.206.121:8080/cart/remove/${cartItemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) { fetchCartItems(); setSuccess('Item removed'); setTimeout(() => setSuccess(''), 2000) }
@@ -251,7 +251,7 @@ const Cart = () => {
       return
     }
     try {
-      const res = await axios.delete(`https://e-commerceweb-back.onrender.com/cart/clear/${userId}`, {
+      const res = await axios.delete(`http://13.53.206.121:8080/cart/clear/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) { setCartItems([]); setTotal(0) }
@@ -268,7 +268,7 @@ const Cart = () => {
     setCouponMsg({ text: '', type: '' })
     try {
       const res = await axios.post(
-        'https://e-commerceweb-back.onrender.com/orders/verify-coupon',
+        'http://13.53.206.121:8080/orders/verify-coupon',
         { code: checkoutForm.couponCode.trim(), amount: total.toString() },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -301,7 +301,7 @@ const Cart = () => {
     setCheckoutError('')
     try {
       const res = await axios.post(
-        'https://e-commerceweb-back.onrender.com/orders/place',
+        'http://13.53.206.121:8080/orders/place',
         {
           userId: parseInt(userId),
           address: checkoutForm.address.trim(),
@@ -330,7 +330,7 @@ const Cart = () => {
     try {
       // Step 1: Place the order in our DB first to get orderId
       const orderRes = await axios.post(
-        'https://e-commerceweb-back.onrender.com/orders/place',
+        'http://13.53.206.121:8080/orders/place',
         {
           userId: parseInt(userId),
           address: checkoutForm.address.trim(),
@@ -344,7 +344,7 @@ const Cart = () => {
 
       // Step 2: Create Razorpay order on backend
       const rpOrderRes = await axios.post(
-        'https://e-commerceweb-back.onrender.com/payment/create-order',
+        'http://13.53.206.121:8080/payment/create-order',
         { amount: Math.round(order.totalAmount), orderId: order.id },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -378,7 +378,7 @@ const Cart = () => {
           // Step 5: Verify payment on backend
           try {
             await axios.post(
-              'https://e-commerceweb-back.onrender.com/payment/verify',
+              'http://13.53.206.121:8080/payment/verify',
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -414,7 +414,7 @@ const Cart = () => {
     if (!placedOrder?.id) return
     setInvoiceLoading(true)
     try {
-      const res = await axios.get(`https://e-commerceweb-back.onrender.com/orders/${placedOrder.id}/invoice`, {
+      const res = await axios.get(`http://13.53.206.121:8080/orders/${placedOrder.id}/invoice`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       })
@@ -439,7 +439,7 @@ const Cart = () => {
     setEmailLoading(true)
     setEmailSent(false)
     try {
-      await axios.get(`https://e-commerceweb-back.onrender.com/orders/${placedOrder.id}/send-invoice`, {
+      await axios.get(`http://13.53.206.121:8080/orders/${placedOrder.id}/send-invoice`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setEmailSent(true)
