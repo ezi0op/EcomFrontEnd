@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+import { BASE_URL } from '../../config'
 import { Ticket, Plus, Trash2, CheckCircle, XCircle, Lock, Unlock, RefreshCw, ArrowUpCircle } from 'lucide-react'
 
 const AdminCoupons = () => {
@@ -31,7 +32,7 @@ const AdminCoupons = () => {
   const fetchCoupons = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('http://13.53.206.121:8080/admin/coupons', {
+      const res = await axios.get(`${BASE_URL}/admin/coupons`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -74,7 +75,7 @@ const AdminCoupons = () => {
         expiryDate: formData.expiryDate + 'T23:59:59' // Append time to make it LocalDateTime compatible if backend expects it, or LocalDate handles format YYYY-MM-DD
       }
 
-      const res = await axios.post('http://13.53.206.121:8080/admin/coupon', payload, {
+      const res = await axios.post(`${BASE_URL}/admin/coupon`, payload, {
         headers: { Authorization: `Bearer ${token}` }
       })
 
@@ -96,7 +97,7 @@ const AdminCoupons = () => {
   const handleToggleStatus = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`http://13.53.206.121:8080/admin/coupon/${id}/toggle`, {}, {
+      const res = await axios.put(`${BASE_URL}/admin/coupon/${id}/toggle`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -118,7 +119,7 @@ const AdminCoupons = () => {
 
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.put(`http://13.53.206.121:8080/admin/coupon/${increaseModal.id}/increase-limit/${amount}`, {}, {
+      const res = await axios.put(`${BASE_URL}/admin/coupon/${increaseModal.id}/increase-limit/${amount}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -134,7 +135,7 @@ const AdminCoupons = () => {
   const handleDelete = async (id) => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.delete(`http://13.53.206.121:8080/admin/coupon/${id}`, {
+      const res = await axios.delete(`${BASE_URL}/admin/coupon/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {

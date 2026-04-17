@@ -1,7 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
-const API_URL = import.meta.env.VITE_API_URL;
+import { BASE_URL } from '../../config'
 import {
   ArrowLeft, User, Phone, MapPin, Camera, Save, Edit2,
   Mail, Shield, CheckCircle, XCircle, Lock, Link
@@ -37,7 +37,7 @@ const Update = () => {
 
   const fetchUser = async () => {
     try {
-      const res = await axios.get(`http://13.53.206.121:8080/users/${userId}`, {
+      const res = await axios.get(`${BASE_URL}/users/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       const u = res.data.data

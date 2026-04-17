@@ -4,6 +4,7 @@ import Footer from './Footer'
 import { Package, Calendar, MapPin, CreditCard, Truck, CheckCircle, Clock, ArrowLeft, ShoppingBag, ChevronDown, ChevronUp, XCircle } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
+import { BASE_URL } from '../../config'
 
 const Orders = () => {
   const navigate = useNavigate()
@@ -31,7 +32,7 @@ const Orders = () => {
     try {
       setLoading(true)
       setError('')
-      const response = await axios.get(`http://13.53.206.121:8080/orders/user/${userId}`, {
+      const response = await axios.get(`${BASE_URL}/orders/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (response.data.success && response.data.data) {
@@ -61,7 +62,7 @@ const Orders = () => {
     setCancelConfirmId(null)
     try {
       const response = await axios.put(
-        `http://13.53.206.121:8080/orders/${orderId}/cancel`,
+        `${BASE_URL}/orders/${orderId}/cancel`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       )

@@ -8,7 +8,9 @@ import {
   Download, Mail, Ticket
 } from 'lucide-react'
 import { useNavigate } from 'react-router-dom'
+
 import axios from 'axios'
+import { BASE_URL } from '../../config'
 
 // ── Dynamically load Razorpay SDK once ────────────────────────────────────────
 const loadRazorpayScript = () =>
@@ -144,7 +146,7 @@ const Cart = () => {
   // Fetch Razorpay Key ID from backend
   const fetchRazorpayConfig = async () => {
     try {
-      const res = await axios.get('http://13.53.206.121:8080/payment/config', {
+      const res = await axios.get(`${BASE_URL}/payment/config`, {
         headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
       })
       if (res.data.success) setRazorpayKeyId(res.data.data.keyId)
@@ -159,7 +161,7 @@ const Cart = () => {
     try {
       setLoading(true)
       setError('')
-      const res = await axios.get(`http://13.53.206.121:8080/cart/user/${userId}`, {
+      const res = await axios.get(`${BASE_URL}/cart/user/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success && res.data.data) {
@@ -177,7 +179,7 @@ const Cart = () => {
 
   const fetchTotal = async () => {
     try {
-      const res = await axios.get(`http://13.53.206.121:8080/cart/total/${userId}`, {
+      const res = await axios.get(`${BASE_URL}/cart/total/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) setTotal(res.data.data || 0)
@@ -187,7 +189,7 @@ const Cart = () => {
   // Public endpoint — get product images/names
   const fetchProductMap = async () => {
     try {
-      const res = await fetch('http://13.53.206.121:8080/products?size=1000')
+      const res = await fetch(`${BASE_URL}/products?size=1000`)
       const data = await res.json()
       const map = {}
       const items = data.data?.content || data.data || []
@@ -215,7 +217,7 @@ const Cart = () => {
     setUpdating(prev => ({ ...prev, [cartItemId]: true }))
     try {
       const res = await axios.put(
-        `http://13.53.206.121:8080/cart/update/${cartItemId}`,
+        `${BASE_URL}/cart/update/${cartItemId}`,
         { quantity: newQty },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -234,7 +236,7 @@ const Cart = () => {
       return
     }
     try {
-      const res = await axios.delete(`http://13.53.206.121:8080/cart/remove/${cartItemId}`, {
+      const res = await axios.delete(`${BASE_URL}/cart/remove/${cartItemId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) { fetchCartItems(); setSuccess('Item removed'); setTimeout(() => setSuccess(''), 2000) }
@@ -251,7 +253,7 @@ const Cart = () => {
       return
     }
     try {
-      const res = await axios.delete(`http://13.53.206.121:8080/cart/clear/${userId}`, {
+      const res = await axios.delete(`${BASE_URL}/cart/clear/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       if (res.data.success) { setCartItems([]); setTotal(0) }
@@ -268,7 +270,7 @@ const Cart = () => {
     setCouponMsg({ text: '', type: '' })
     try {
       const res = await axios.post(
-        'http://13.53.206.121:8080/orders/verify-coupon',
+        `${BASE_URL}/orders/verify-coupon`,
         { code: checkoutForm.couponCode.trim(), amount: total.toString() },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -301,7 +303,7 @@ const Cart = () => {
     setCheckoutError('')
     try {
       const res = await axios.post(
-        'http://13.53.206.121:8080/orders/place',
+        `${BASE_URL}/orders/place`,
         {
           userId: parseInt(userId),
           address: checkoutForm.address.trim(),
@@ -330,7 +332,7 @@ const Cart = () => {
     try {
       // Step 1: Place the order in our DB first to get orderId
       const orderRes = await axios.post(
-        'http://13.53.206.121:8080/orders/place',
+        `${BASE_URL}/orders/place`,
         {
           userId: parseInt(userId),
           address: checkoutForm.address.trim(),
@@ -344,7 +346,7 @@ const Cart = () => {
 
       // Step 2: Create Razorpay order on backend
       const rpOrderRes = await axios.post(
-        'http://13.53.206.121:8080/payment/create-order',
+        `${BASE_URL}/payment/create-order`,
         { amount: Math.round(order.totalAmount), orderId: order.id },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -378,7 +380,7 @@ const Cart = () => {
           // Step 5: Verify payment on backend
           try {
             await axios.post(
-              'http://13.53.206.121:8080/payment/verify',
+              `${BASE_URL}/payment/verify`,
               {
                 razorpay_order_id: response.razorpay_order_id,
                 razorpay_payment_id: response.razorpay_payment_id,
@@ -414,7 +416,7 @@ const Cart = () => {
     if (!placedOrder?.id) return
     setInvoiceLoading(true)
     try {
-      const res = await axios.get(`http://13.53.206.121:8080/orders/${placedOrder.id}/invoice`, {
+      const res = await axios.get(`${BASE_URL}/orders/${placedOrder.id}/invoice`, {
         headers: { Authorization: `Bearer ${token}` },
         responseType: 'blob',
       })
@@ -439,7 +441,7 @@ const Cart = () => {
     setEmailLoading(true)
     setEmailSent(false)
     try {
-      await axios.get(`http://13.53.206.121:8080/orders/${placedOrder.id}/send-invoice`, {
+      await axios.get(`${BASE_URL}/orders/${placedOrder.id}/send-invoice`, {
         headers: { Authorization: `Bearer ${token}` },
       })
       setEmailSent(true)
