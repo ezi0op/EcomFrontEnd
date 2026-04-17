@@ -36,7 +36,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
   const [compareResult, setCompareResult] = useState('')
   const [compareLoading, setCompareLoading] = useState(false)
 
-  const API_BASE_URL = 'http://13.53.206.121:8080/products'
+  const API_BASE_URL = `${import.meta.env.VITE_API_URL}/products`
 
   const userId = localStorage.getItem('userId')
   const token = localStorage.getItem('token')
@@ -160,7 +160,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
     setAddingToCart(prev => ({ ...prev, [product.id]: true }))
     try {
       const response = await axios.post(
-        'http://13.53.206.121:8080/cart/add',
+        `${import.meta.env.VITE_API_URL}/cart/add`,
         { userId: parseInt(userId), productId: product.id, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -192,7 +192,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
     setAddingToCart(prev => ({ ...prev, [product.id]: true }))
     try {
       const response = await axios.post(
-        'http://13.53.206.121:8080/cart/add',
+        `${import.meta.env.VITE_API_URL}/cart/add`,
         { userId: parseInt(userId), productId: product.id, quantity },
         { headers: { Authorization: `Bearer ${token}` } }
       )
@@ -230,7 +230,7 @@ const Mid = ({ initialSearchKeyword = '', onShowAllProductsChange = () => {} }) 
   }
 
   // ── AI helpers ──────────────────────────────────────────────────────────────
-  const AI_BASE = 'http://13.53.206.121:8080/ai'
+  const AI_BASE = `${import.meta.env.VITE_API_URL}/ai`
 
   const openAiModal = async (product) => {
     setAiModal(product)

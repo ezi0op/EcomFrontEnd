@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+const API_URL = import.meta.env.VITE_API_URL;
 import {
   ArrowLeft, User, Phone, MapPin, Camera, Save, Edit2,
   Mail, Shield, CheckCircle, XCircle, Lock, Link
@@ -98,7 +99,7 @@ const Update = () => {
     try {
       // PUT /users/update/{id}  → UpdateUserDTO: name, address, mobile, image ONLY
       const res = await axios.put(
-        `http://13.53.206.121:8080/users/update/${userId}`,
+        `${API_URL}/users/update/${userId}`,
         { name: form.name, address: form.address, mobile: form.mobile, image: form.image },
         { headers: { Authorization: `Bearer ${token}` } }
       )

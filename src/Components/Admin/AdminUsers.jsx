@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL;
 import { Trash2, Shield, ShieldOff, Loader, Search, CheckCircle, XCircle, AlertTriangle, X } from 'lucide-react'
 
 const AdminUsers = () => {
@@ -21,7 +22,7 @@ const AdminUsers = () => {
   const fetchUsers = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('http://13.53.206.121:8080/admin/users', {
+        const res = await axios.get(`${API_URL}/admin/users`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -37,7 +38,7 @@ const AdminUsers = () => {
   const toggleStatus = async (userId, currentStatus) => {
     try {
       const token = localStorage.getItem('token')
-      await axios.put(`http://13.53.206.121:8080/admin/user/status/${userId}`, 
+        await axios.put(`${API_URL}/admin/user/status/${userId}`, 
         { active: !currentStatus },
         { headers: { Authorization: `Bearer ${token}` } }
       )

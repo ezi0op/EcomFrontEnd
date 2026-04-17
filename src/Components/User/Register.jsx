@@ -1,6 +1,7 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
+const API_URL = import.meta.env.VITE_API_URL;
 import { Eye, EyeOff, Mail, Lock, User, Phone, MapPin, Camera, ShoppingBag, Zap, Shield, Truck, Link } from 'lucide-react'
 
 const Register = () => {
@@ -55,7 +56,7 @@ const Register = () => {
 
     setLoading(true)
     try {
-      const res = await axios.post('http://13.53.206.121:8080/auth/register', {
+      const res = await axios.post(`${API_URL}/auth/register`, {
         name:     formData.name,
         email:    formData.email,
         password: formData.password,

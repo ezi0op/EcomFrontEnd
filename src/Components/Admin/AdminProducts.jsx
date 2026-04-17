@@ -1,5 +1,6 @@
 ﻿import React, { useState, useEffect } from 'react'
 import axios from 'axios'
+const API_URL = import.meta.env.VITE_API_URL;
 import { Trash2, Edit, Plus, Loader, Search, X, CheckCircle, XCircle, AlertTriangle } from 'lucide-react'
 
 const AdminProducts = () => {
@@ -32,7 +33,7 @@ const AdminProducts = () => {
   const fetchProducts = async () => {
     try {
       const token = localStorage.getItem('token')
-      const res = await axios.get('http://13.53.206.121:8080/admin/products', {
+      const res = await axios.get(`${API_URL}/admin/products`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       if (res.data.success) {
@@ -52,7 +53,7 @@ const AdminProducts = () => {
   const handleDeleteConfirm = async () => {
     try {
       const token = localStorage.getItem('token')
-      await axios.delete(`http://13.53.206.121:8080/admin/product/${confirmModal.productId}`, {
+      await axios.delete(`${API_URL}/admin/product/${confirmModal.productId}`, {
         headers: { Authorization: `Bearer ${token}` }
       })
       setProducts(products.filter(p => p.id !== confirmModal.productId))
@@ -71,11 +72,11 @@ const AdminProducts = () => {
       const payload = { ...formData, price: Number(formData.price), quantity: Number(formData.quantity) }
       
       if (editingProduct) {
-        await axios.put(`http://13.53.206.121:8080/admin/product/${editingProduct.id}`, payload, {
+        await axios.put(`${API_URL}/admin/product/${editingProduct.id}`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         })
       } else {
-        await axios.post('http://13.53.206.121:8080/admin/product', payload, {
+        await axios.post(`${API_URL}/admin/product`, payload, {
           headers: { Authorization: `Bearer ${token}` }
         })
       }
