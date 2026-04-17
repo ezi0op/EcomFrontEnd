@@ -43,7 +43,6 @@ const Login = () => {
     setError('')
     setLoading(true)
     try {
-      const res = await axios.post('http://13.53.206.121:8080/auth/login', {
       const res = await axios.post(`${API_URL}/auth/login`, {
         email: formData.email,
         password: formData.password,
