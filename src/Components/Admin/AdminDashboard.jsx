@@ -1,4 +1,4 @@
-﻿import React, { useState } from 'react'
+import React, { useState } from 'react'
 import { LayoutDashboard, Users, Package, ShoppingCart } from 'lucide-react'
 import AdminOverview from './AdminOverview'
 import AdminUsers from './AdminUsers'
@@ -37,11 +37,10 @@ const AdminDashboard = () => {
           <button
             key={tab.id}
             onClick={() => setActiveTab(tab.id)}
-            className={`flex items-center gap-3 px-8 py-4 font-semibold text-sm transition-all duration-300 border-l-4 ${
-              activeTab === tab.id
+            className={`flex items-center gap-3 px-8 py-4 font-semibold text-sm transition-all duration-300 border-l-4 ${activeTab === tab.id
                 ? 'border-emerald-600 bg-emerald-50 text-emerald-700 shadow-inner'
                 : 'border-transparent text-gray-500 hover:bg-gray-50 hover:text-gray-900'
-            }`}
+              }`}
           >
             <tab.icon className={`w-5 h-5 ${activeTab === tab.id ? 'text-emerald-600' : 'text-gray-400'}`} />
             {tab.label}
