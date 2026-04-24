@@ -55,21 +55,21 @@ const AdminOverview = () => {
   ]
 
   return (
-    <div className='space-y-8 animate-fade-in'>
+    <div className='space-y-6 sm:space-y-8 animate-fade-in'>
       <div>
-        <h2 className='text-3xl font-bold text-gray-800'>Dashboard Overview</h2>
-        <p className='text-gray-500 mt-2'>Welcome to the admin control panel. Here's what's happening today.</p>
+        <h2 className='text-2xl sm:text-3xl font-bold text-gray-800'>Dashboard Overview</h2>
+        <p className='text-gray-500 text-sm sm:text-base mt-2'>Welcome to the admin control panel. Here's what's happening today.</p>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6'>
         {cards.map((card, idx) => (
-          <div key={idx} className='bg-white p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex items-center gap-6'>
-            <div className={`w-16 h-16 rounded-2xl flex items-center justify-center ${card.bg}`}>
-              <card.icon className={`w-8 h-8 ${card.color}`} />
+          <div key={idx} className='bg-white p-4 sm:p-6 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition-shadow flex flex-col sm:flex-row items-start sm:items-center gap-4 sm:gap-6'>
+            <div className={`w-12 sm:w-16 h-12 sm:h-16 rounded-2xl flex items-center justify-center flex-shrink-0 ${card.bg}`}>
+              <card.icon className={`w-6 sm:w-8 h-6 sm:h-8 ${card.color}`} />
             </div>
-            <div>
-              <p className='text-sm font-semibold text-gray-500 uppercase tracking-wider'>{card.title}</p>
-              <h3 className='text-3xl font-bold text-gray-800 mt-1'>{card.value}</h3>
+            <div className='flex-1 min-w-0'>
+              <p className='text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider'>{card.title}</p>
+              <h3 className='text-2xl sm:text-3xl font-bold text-gray-800 mt-1'>{card.value}</h3>
             </div>
           </div>
         ))}

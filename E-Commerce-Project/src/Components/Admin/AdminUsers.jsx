@@ -116,85 +116,85 @@ const AdminUsers = () => {
         </div>
       )}
 
-      <div className='flex justify-between items-end mb-6'>
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-6'>
         <div>
-          <h2 className='text-3xl font-bold text-gray-800'>Customer Management</h2>
-          <p className='text-gray-500 mt-1'>View and manage all registered users.</p>
+          <h2 className='text-2xl sm:text-3xl font-bold text-gray-800'>Customer Management</h2>
+          <p className='text-gray-500 text-sm mt-1'>View and manage all registered users.</p>
         </div>
-        <div className='flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm'>
-          <Search className='w-5 h-5 text-gray-400' />
+        <div className='flex items-center gap-2 bg-white px-3 sm:px-4 py-2 rounded-lg border border-gray-200 shadow-sm w-full sm:w-auto'>
+          <Search className='w-5 h-5 text-gray-400 flex-shrink-0' />
           <input 
             type='text' 
             placeholder='Search users...' 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className='outline-none bg-transparent'
+            className='outline-none bg-transparent flex-1 text-sm'
           />
         </div>
       </div>
 
-      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden'>
-        <table className='w-full text-left border-collapse'>
+      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto'>
+        <table className='w-full text-left border-collapse text-sm'>
           <thead>
             <tr className='bg-gray-50 border-b border-gray-200'>
-              <th className='p-4 font-semibold text-gray-600'>Name</th>
-              <th className='p-4 font-semibold text-gray-600'>Email</th>
-              <th className='p-4 font-semibold text-gray-600'>Role</th>
-              <th className='p-4 font-semibold text-gray-600 text-center'>Status</th>
-              <th className='p-4 font-semibold text-gray-600 text-right'>Actions</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Name</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Email</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Role</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm text-center'>Status</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm text-right'>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredUsers.map(user => (
               <tr key={user.id} className='border-b border-gray-100 hover:bg-gray-50 transition-colors'>
-                <td className='p-4'>
-                  <div className='flex items-center gap-3'>
-                    <img src={user.image || 'https://via.placeholder.com/40'} alt={user.name} className='w-10 h-10 rounded-full object-cover border border-gray-200' />
-                    <span className='font-semibold text-gray-800'>{user.name}</span>
+                <td className='p-3 sm:p-4'>
+                  <div className='flex items-center gap-2 sm:gap-3'>
+                    <img src={user.image || 'https://via.placeholder.com/40'} alt={user.name} className='w-7 sm:w-10 h-7 sm:h-10 rounded-full object-cover border border-gray-200 flex-shrink-0' />
+                    <span className='font-semibold text-gray-800 text-xs sm:text-sm line-clamp-1'>{user.name}</span>
                   </div>
                 </td>
-                <td className='p-4 text-gray-600'>{user.email}</td>
-                <td className='p-4 text-gray-600'>
-                  <span className={`px-2 py-1 rounded text-xs font-bold ${user.role === 'ROLE_ADMIN' || user.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700'}`}>
-                    {user.role}
+                <td className='p-3 sm:p-4 text-gray-600 text-xs sm:text-sm truncate'>{user.email}</td>
+                <td className='p-3 sm:p-4'>
+                  <span className={`px-2 py-1 rounded text-xs font-bold whitespace-nowrap ${user.role === 'ROLE_ADMIN' || user.role === 'ADMIN' ? 'bg-purple-100 text-purple-700' : 'bg-gray-100 text-gray-700'}`}>
+                    {user.role === 'ROLE_ADMIN' || user.role === 'ADMIN' ? 'Admin' : 'User'}
                   </span>
                 </td>
-                <td className='p-4 text-center'>
-                  <span className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold ${user.active ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
+                <td className='p-3 sm:p-4 text-center'>
+                  <span className={`inline-flex items-center gap-1 px-2 sm:px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${user.active ? 'bg-emerald-100 text-emerald-700' : 'bg-red-100 text-red-700'}`}>
                     {user.active ? 'Active' : 'Blocked'}
                   </span>
                 </td>
-                <td className='p-4 text-right space-x-2'>
-                  {!(user.role === 'ROLE_ADMIN' || user.role === 'ADMIN') ? (
-                    <>
-                      <button 
-                        onClick={() => toggleStatus(user.id, user.active)}
-                        title={user.active ? 'Block User' : 'Activate User'}
-                        className={`p-2 rounded-lg transition-colors ${user.active ? 'text-amber-500 hover:bg-amber-50' : 'text-emerald-500 hover:bg-emerald-50'}`}
-                      >
-                        {user.active ? <ShieldOff className='w-5 h-5' /> : <Shield className='w-5 h-5' />}
-                      </button>
-                      <button 
-                        onClick={() => deleteUser(user.id)}
-                        className='p-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors'
-                        title='Delete User'
-                      >
-                        <Trash2 className='w-5 h-5' />
-                      </button>
-                    </>
-                  ) : (
-                    <div className='flex justify-end'>
-                      <span className='text-purple-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1.5 bg-purple-50 px-3 py-1.5 rounded-lg'>
-                        <Shield className='w-4 h-4' /> Protected
+                <td className='p-3 sm:p-4 text-right'>
+                  <div className='flex justify-end gap-1 sm:gap-2'>
+                    {!(user.role === 'ROLE_ADMIN' || user.role === 'ADMIN') ? (
+                      <>
+                        <button 
+                          onClick={() => toggleStatus(user.id, user.active)}
+                          title={user.active ? 'Block User' : 'Activate User'}
+                          className={`p-1.5 sm:p-2 rounded-lg transition-colors ${user.active ? 'text-amber-500 hover:bg-amber-50' : 'text-emerald-500 hover:bg-emerald-50'}`}
+                        >
+                          {user.active ? <ShieldOff className='w-4 sm:w-5 h-4 sm:h-5' /> : <Shield className='w-4 sm:w-5 h-4 sm:h-5' />}
+                        </button>
+                        <button 
+                          onClick={() => deleteUser(user.id)}
+                          className='p-1.5 sm:p-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors'
+                          title='Delete User'
+                        >
+                          <Trash2 className='w-4 sm:w-5 h-4 sm:h-5' />
+                        </button>
+                      </>
+                    ) : (
+                      <span className='text-purple-400 text-xs font-bold uppercase tracking-wider flex items-center gap-1 bg-purple-50 px-2 py-1 rounded'>
+                        <Shield className='w-3 sm:w-4 h-3 sm:h-4' /> Protected
                       </span>
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </td>
               </tr>
             ))}
             {filteredUsers.length === 0 && (
               <tr>
-                <td colSpan='5' className='p-8 text-center text-gray-500'>No users found.</td>
+                <td colSpan='5' className='p-6 sm:p-8 text-center text-gray-500 text-sm'>No users found.</td>
               </tr>
             )}
           </tbody>

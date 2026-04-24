@@ -1,4 +1,4 @@
-﻿import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import Header from './Header'
 import Footer from './Footer'
 import {
@@ -574,7 +574,7 @@ const Cart = () => {
           {/* Coupon Code */}
           <div>
             <label className='flex items-center gap-2 text-sm font-bold text-gray-700 mb-2'>
-               <Ticket className='w-4 h-4 text-emerald-600' /> Promo/Coupon Code <span className='text-xs font-normal text-gray-400'>(optional)</span>
+              <Ticket className='w-4 h-4 text-emerald-600' /> Promo/Coupon Code <span className='text-xs font-normal text-gray-400'>(optional)</span>
             </label>
             <div className='flex gap-2 relative'>
               <input
@@ -589,11 +589,10 @@ const Cart = () => {
                 disabled={appliedCoupon !== null}
                 placeholder='Enter code here...'
                 maxLength={20}
-                className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all text-sm font-bold tracking-wider ${
-                  appliedCoupon 
-                    ? 'border-emerald-500 bg-emerald-50 text-emerald-800' 
+                className={`w-full px-4 py-3 border-2 rounded-xl focus:outline-none transition-all text-sm font-bold tracking-wider ${appliedCoupon
+                    ? 'border-emerald-500 bg-emerald-50 text-emerald-800'
                     : 'border-gray-200 focus:border-cyan-500 focus:ring-2 focus:ring-cyan-100 text-gray-700'
-                }`}
+                  }`}
               />
               {appliedCoupon ? (
                 <button type='button' onClick={handleRemoveCoupon}
@@ -778,11 +777,10 @@ const Cart = () => {
                 <button
                   onClick={handleSendInvoice}
                   disabled={emailLoading || emailSent}
-                  className={`w-full py-3 flex items-center justify-center gap-2.5 font-bold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:hover:scale-100 ${
-                    emailSent
+                  className={`w-full py-3 flex items-center justify-center gap-2.5 font-bold rounded-xl transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] disabled:cursor-not-allowed disabled:hover:scale-100 ${emailSent
                       ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-200'
                       : 'bg-gradient-to-r from-rose-500 to-pink-500 text-white shadow-lg shadow-rose-200 hover:shadow-rose-300 disabled:opacity-60'
-                  }`}>
+                    }`}>
                   {emailLoading
                     ? <span className='w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin' />
                     : <Mail className='w-4 h-4' />}

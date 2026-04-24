@@ -1,10 +1,10 @@
-﻿import { Search, ShoppingBag, X, LogOut, User, ShoppingCart, Lock } from 'lucide-react'
+import { Search, ShoppingBag, X, LogOut, User, ShoppingCart, Lock } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 const API_URL = import.meta.env.VITE_API_URL;
 
-const Header = ({ searchKeyword = '', setSearchKeyword = () => {}, hideSearch = false, adminView, setAdminView }) => {
+const Header = ({ searchKeyword = '', setSearchKeyword = () => { }, hideSearch = false, adminView, setAdminView }) => {
   const [isSearchOpen, setIsSearchOpen] = useState(false)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [isAdmin, setIsAdmin] = useState(false)

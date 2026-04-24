@@ -81,65 +81,65 @@ const AdminOrders = () => {
         </div>
       )}
 
-      <div className='flex justify-between items-end mb-6'>
+      <div className='flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 mb-6'>
         <div>
-          <h2 className='text-3xl font-bold text-gray-800'>Order Management</h2>
-          <p className='text-gray-500 mt-1'>View and track customer orders.</p>
+          <h2 className='text-2xl sm:text-3xl font-bold text-gray-800'>Order Management</h2>
+          <p className='text-gray-500 text-sm mt-1'>View and track customer orders.</p>
         </div>
-        <div className='flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm'>
-          <Search className='w-5 h-5 text-gray-400' />
+        <div className='flex items-center gap-2 bg-white px-3 sm:px-4 py-2 rounded-lg border border-gray-200 shadow-sm w-full sm:w-auto'>
+          <Search className='w-5 h-5 text-gray-400 flex-shrink-0' />
           <input 
             type='text' 
-            placeholder='Search by Order ID or Name...' 
+            placeholder='Search by ID or Name...' 
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
-            className='outline-none bg-transparent w-64'
+            className='outline-none bg-transparent flex-1 text-sm'
           />
         </div>
       </div>
 
-      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden'>
-        <table className='w-full text-left border-collapse'>
+      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto'>
+        <table className='w-full text-left border-collapse text-sm'>
           <thead>
             <tr className='bg-gray-50 border-b border-gray-200'>
-              <th className='p-4 font-semibold text-gray-600'>Order ID</th>
-              <th className='p-4 font-semibold text-gray-600'>Customer</th>
-              <th className='p-4 font-semibold text-gray-600'>Total Amount</th>
-              <th className='p-4 font-semibold text-gray-600'>Date</th>
-              <th className='p-4 font-semibold text-gray-600'>Status</th>
-              <th className='p-4 font-semibold text-gray-600 text-right'>Update Status</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Order ID</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Customer</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Amount</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Date</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Status</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm text-right'>Update</th>
             </tr>
           </thead>
           <tbody>
             {filteredOrders.map(order => (
               <tr key={order.id} className='border-b border-gray-100 hover:bg-gray-50 transition-colors'>
-                <td className='p-4 font-bold text-gray-800'>#{order.id}</td>
-                <td className='p-4'>
-                  <div className='flex items-center gap-3'>
+                <td className='p-3 sm:p-4 font-bold text-gray-800 text-xs sm:text-sm'>#{order.id}</td>
+                <td className='p-3 sm:p-4'>
+                  <div className='flex items-center gap-2 sm:gap-3'>
                     {order.user?.image ? (
-                      <img src={order.user.image} alt='User' className='w-8 h-8 rounded-full border border-gray-200 object-cover flex-shrink-0' />
+                      <img src={order.user.image} alt='User' className='w-6 sm:w-8 h-6 sm:h-8 rounded-full border border-gray-200 object-cover flex-shrink-0' />
                     ) : (
-                      <div className='w-8 h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200 flex-shrink-0'>
-                        <User className='w-4 h-4 text-emerald-600' />
+                      <div className='w-6 sm:w-8 h-6 sm:h-8 rounded-full bg-emerald-100 flex items-center justify-center border border-emerald-200 flex-shrink-0'>
+                        <User className='w-3 sm:w-4 h-3 sm:h-4 text-emerald-600' />
                       </div>
                     )}
-                    <span className='font-semibold text-gray-700'>{order.user?.name || 'Unknown'}</span>
+                    <span className='font-semibold text-gray-700 text-xs sm:text-sm line-clamp-1'>{order.user?.name || 'Unknown'}</span>
                   </div>
                 </td>
-                <td className='p-4 font-bold text-emerald-600'>${order.totalAmount}</td>
-                <td className='p-4 text-gray-500 text-sm'>
+                <td className='p-3 sm:p-4 font-bold text-emerald-600 text-xs sm:text-sm'>${order.totalAmount}</td>
+                <td className='p-3 sm:p-4 text-gray-500 text-xs sm:text-sm'>
                   {new Date(order.orderDate).toLocaleDateString()}
                 </td>
-                <td className='p-4'>
-                  <span className={`px-3 py-1 rounded-full text-xs font-bold ${getStatusColor(order.orderStatus)}`}>
+                <td className='p-3 sm:p-4'>
+                  <span className={`px-2 sm:px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap ${getStatusColor(order.orderStatus)}`}>
                     {order.orderStatus}
                   </span>
                 </td>
-                <td className='p-4 text-right'>
+                <td className='p-3 sm:p-4 text-right'>
                   <select 
                     value={order.orderStatus} 
                     onChange={e => handleStatusChange(order.id, e.target.value)}
-                    className='bg-white border border-gray-300 text-gray-700 text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 block w-32 ml-auto p-2 outline-none font-semibold'
+                    className='bg-white border border-gray-300 text-gray-700 text-xs sm:text-sm rounded-lg focus:ring-emerald-500 focus:border-emerald-500 w-24 sm:w-32 p-1.5 sm:p-2 outline-none font-semibold ml-auto block'
                   >
                     <option value='PENDING'>PENDING</option>
                     <option value='PLACED'>PLACED</option>
@@ -152,7 +152,7 @@ const AdminOrders = () => {
             ))}
             {filteredOrders.length === 0 && (
               <tr>
-                <td colSpan='6' className='p-8 text-center text-gray-500'>No orders found.</td>
+                <td colSpan='6' className='p-6 sm:p-8 text-center text-gray-500 text-sm'>No orders found.</td>
               </tr>
             )}
           </tbody>

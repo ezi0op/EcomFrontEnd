@@ -153,48 +153,48 @@ const AdminProducts = () => {
         </div>
       )}
 
-      <div className='flex justify-between items-end mb-6'>
+      <div className='flex flex-col gap-4 mb-6'>
         <div>
-          <h2 className='text-3xl font-bold text-gray-800'>Product Inventory</h2>
-          <p className='text-gray-500 mt-1'>Manage your store catalog here.</p>
+          <h2 className='text-2xl sm:text-3xl font-bold text-gray-800'>Product Inventory</h2>
+          <p className='text-gray-500 text-sm mt-1'>Manage your store catalog here.</p>
         </div>
-        <div className='flex items-center gap-4'>
-          <div className='flex items-center gap-2 bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm'>
-            <Search className='w-5 h-5 text-gray-400' />
+        <div className='flex flex-col sm:flex-row items-stretch sm:items-center gap-3'>
+          <div className='flex items-center gap-2 bg-white px-3 sm:px-4 py-2 rounded-lg border border-gray-200 shadow-sm flex-1 sm:flex-initial'>
+            <Search className='w-5 h-5 text-gray-400 flex-shrink-0' />
             <input 
               type='text' 
               placeholder='Search products...' 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className='outline-none bg-transparent'
+              className='outline-none bg-transparent flex-1 text-sm'
             />
           </div>
           <button 
             onClick={() => openModal()}
-            className='flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors font-semibold shadow-sm'
+            className='flex items-center justify-center gap-2 bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded-lg transition-colors font-semibold shadow-sm whitespace-nowrap'
           >
             <Plus className='w-5 h-5' /> Add Product
           </button>
         </div>
       </div>
 
-      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden'>
-        <table className='w-full text-left border-collapse'>
+      <div className='bg-white rounded-xl shadow-sm border border-gray-200 overflow-x-auto'>
+        <table className='w-full text-left border-collapse text-sm'>
           <thead>
             <tr className='bg-gray-50 border-b border-gray-200'>
-              <th className='p-4 font-semibold text-gray-600 w-16'>Image</th>
-              <th className='p-4 font-semibold text-gray-600'>Name</th>
-              <th className='p-4 font-semibold text-gray-600'>Category</th>
-              <th className='p-4 font-semibold text-gray-600'>Price</th>
-              <th className='p-4 font-semibold text-gray-600'>Stock</th>
-              <th className='p-4 font-semibold text-gray-600 text-right'>Actions</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm w-12 sm:w-16'>Image</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Name</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm hidden sm:table-cell'>Category</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Price</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm'>Stock</th>
+              <th className='p-3 sm:p-4 font-semibold text-gray-600 text-xs sm:text-sm text-right'>Actions</th>
             </tr>
           </thead>
           <tbody>
             {filteredProducts.map(product => (
               <tr key={product.id} className='border-b border-gray-100 hover:bg-gray-50 transition-colors'>
-                <td className='p-4'>
-                  <div className='w-12 h-12 rounded-lg overflow-hidden border border-gray-200 bg-white flex items-center justify-center'>
+                <td className='p-3 sm:p-4'>
+                  <div className='w-10 sm:w-12 h-10 sm:h-12 rounded-lg overflow-hidden border border-gray-200 bg-white flex items-center justify-center flex-shrink-0'>
                     {product.image ? (
                       <img src={product.image} alt={product.name} className='w-full h-full object-cover' onError={(e) => {e.target.onerror = null; e.target.src = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Crect width='100' height='100' fill='%23f3f4f6'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-family='sans-serif' font-size='12' fill='%239ca3af'%3ENo Img%3C/text%3E%3C/svg%3E";}} />
                     ) : (
@@ -202,35 +202,37 @@ const AdminProducts = () => {
                     )}
                   </div>
                 </td>
-                <td className='p-4 font-semibold text-gray-800'>{product.name}</td>
-                <td className='p-4 text-gray-600 capitalize'>{product.category}</td>
-                <td className='p-4 font-bold text-emerald-600'>${product.price}</td>
-                <td className='p-4'>
-                  <span className={`px-2 py-1 rounded text-xs font-bold ${product.quantity > 5 ? 'bg-green-100 text-green-700' : product.quantity > 0 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
-                    {product.quantity} in stock
+                <td className='p-3 sm:p-4 font-semibold text-gray-800 text-xs sm:text-sm line-clamp-2'>{product.name}</td>
+                <td className='p-3 sm:p-4 text-gray-600 capitalize text-xs sm:text-sm hidden sm:table-cell'>{product.category}</td>
+                <td className='p-3 sm:p-4 font-bold text-emerald-600 text-xs sm:text-sm'>${product.price}</td>
+                <td className='p-3 sm:p-4'>
+                  <span className={`px-2 py-1 rounded text-xs font-bold whitespace-nowrap ${product.quantity > 5 ? 'bg-green-100 text-green-700' : product.quantity > 0 ? 'bg-amber-100 text-amber-700' : 'bg-red-100 text-red-700'}`}>
+                    {product.quantity}
                   </span>
                 </td>
-                <td className='p-4 text-right space-x-2'>
-                  <button 
-                    onClick={() => openModal(product)}
-                    className='p-2 rounded-lg text-blue-500 hover:bg-blue-50 transition-colors'
-                    title='Edit Product'
-                  >
-                    <Edit className='w-5 h-5' />
-                  </button>
-                  <button 
-                    onClick={() => handleDelete(product.id)}
-                    className='p-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors'
-                    title='Delete Product'
-                  >
-                    <Trash2 className='w-5 h-5' />
-                  </button>
+                <td className='p-3 sm:p-4 text-right'>
+                  <div className='flex justify-end gap-1 sm:gap-2'>
+                    <button 
+                      onClick={() => openModal(product)}
+                      className='p-1.5 sm:p-2 rounded-lg text-blue-500 hover:bg-blue-50 transition-colors'
+                      title='Edit Product'
+                    >
+                      <Edit className='w-4 sm:w-5 h-4 sm:h-5' />
+                    </button>
+                    <button 
+                      onClick={() => handleDelete(product.id)}
+                      className='p-1.5 sm:p-2 rounded-lg text-red-500 hover:bg-red-50 transition-colors'
+                      title='Delete Product'
+                    >
+                      <Trash2 className='w-4 sm:w-5 h-4 sm:h-5' />
+                    </button>
+                  </div>
                 </td>
               </tr>
             ))}
             {filteredProducts.length === 0 && (
               <tr>
-                <td colSpan='6' className='p-8 text-center text-gray-500'>No products found.</td>
+                <td colSpan='6' className='p-6 sm:p-8 text-center text-gray-500 text-sm'>No products found.</td>
               </tr>
             )}
           </tbody>
