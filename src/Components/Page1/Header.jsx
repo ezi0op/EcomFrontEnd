@@ -1,4 +1,4 @@
-import { Search, ShoppingBag, X, LogOut, User, ShoppingCart, Lock } from 'lucide-react'
+import { Search, ShoppingBag, X, LogOut, User, ShoppingCart, Lock, Tag } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
@@ -10,7 +10,35 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => { }, hideSearch =
   const [isAdmin, setIsAdmin] = useState(false)
   const [showUserMenu, setShowUserMenu] = useState(false)
   const [evicted, setEvicted] = useState(false)
+  const [showCouponsModal, setShowCouponsModal] = useState(false)
+  const [coupons, setCoupons] = useState([])
+  const [couponsLoading, setCouponsLoading] = useState(false)
+  const [copiedCode, setCopiedCode] = useState(null)
   const navigate = useNavigate()
+
+  useEffect(() => {
+    if (showCouponsModal) {
+      fetchCoupons()
+    }
+  }, [showCouponsModal])
+
+  const fetchCoupons = async () => {
+    setCouponsLoading(true)
+    try {
+      const res = await axios.get(`${API_URL}/coupons`)
+      setCoupons(res.data?.data || res.data || [])
+    } catch (err) {
+      console.error('Failed to fetch coupons:', err)
+    } finally {
+      setCouponsLoading(false)
+    }
+  }
+
+  const handleCopyCode = (code) => {
+    navigator.clipboard.writeText(code)
+    setCopiedCode(code)
+    setTimeout(() => setCopiedCode(null), 2000)
+  }
 
   useEffect(() => {
     const token = localStorage.getItem('token')
@@ -68,6 +96,92 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => { }, hideSearch =
 
   return (
     <>
+      {/* ── Coupons Showcase Modal ── */}
+      {showCouponsModal && (
+        <div className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-3xl shadow-2xl w-full max-w-md max-h-[80vh] flex flex-col overflow-hidden animate-slide-in">
+            {/* Header */}
+            <div className="bg-gradient-to-r from-emerald-600 to-cyan-500 p-5 flex items-center justify-between flex-shrink-0 text-white">
+              <div className="flex items-center gap-3">
+                <Tag className="w-6 h-6 animate-pulse" />
+                <div>
+                  <h3 className="font-bold text-lg leading-tight">Available Shop Coupons</h3>
+                  <p className="text-xs text-emerald-100">Click to copy code & apply at checkout</p>
+                </div>
+              </div>
+              <button onClick={() => setShowCouponsModal(false)} className="text-white/70 hover:text-white transition-colors">
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* List of Coupons */}
+            <div className="overflow-y-auto flex-1 p-5 space-y-4">
+              {couponsLoading ? (
+                <div className="flex flex-col items-center justify-center py-12 text-emerald-600 gap-3">
+                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600" />
+                  <p className="text-sm font-semibold text-gray-500">Loading coupons...</p>
+                </div>
+              ) : coupons.length === 0 ? (
+                <div className="text-center py-12 text-gray-500">
+                  <p className="text-base font-semibold">No active coupons available.</p>
+                  <p className="text-xs text-gray-400 mt-1">Check back later for exclusive deals!</p>
+                </div>
+              ) : (
+                coupons.map((coupon) => (
+                  <div
+                    key={coupon.id}
+                    className="relative bg-gradient-to-br from-emerald-50 to-cyan-50/50 border-2 border-dashed border-emerald-300 rounded-2xl p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:shadow-md transition-all duration-300"
+                  >
+                    {/* Left details stub */}
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <span className="bg-emerald-600 text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">
+                          {coupon.type === 'PERCENTAGE' ? `${coupon.discount}% OFF` : `$${coupon.discount} OFF`}
+                        </span>
+                        <span className="text-[11px] text-gray-500 font-medium">
+                          Min Spend: ${coupon.minAmount}
+                        </span>
+                      </div>
+                      <h4 className="font-bold text-gray-800 text-base">{coupon.code}</h4>
+                      {coupon.maxDiscount > 0 && coupon.type === 'PERCENTAGE' && (
+                        <p className="text-xs text-gray-500">Max Cap: ${coupon.maxDiscount}</p>
+                      )}
+                      {coupon.expiryDate && (
+                        <p className="text-[10px] text-gray-400">
+                          Expires: {new Date(coupon.expiryDate).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Right action stub */}
+                    <button
+                      onClick={() => handleCopyCode(coupon.code)}
+                      className={`px-4 py-2 rounded-xl text-xs font-bold shadow-sm transition-all duration-300 flex-shrink-0 w-full sm:w-auto text-center ${
+                        copiedCode === coupon.code
+                          ? 'bg-green-500 text-white hover:bg-green-600 scale-105'
+                          : 'bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50 hover:scale-105'
+                      }`}
+                    >
+                      {copiedCode === coupon.code ? '✓ Copied' : 'Copy Code'}
+                    </button>
+                  </div>
+                ))
+              )}
+            </div>
+
+            {/* Close footer */}
+            <div className="p-4 border-t border-gray-100 flex-shrink-0">
+              <button
+                onClick={() => setShowCouponsModal(false)}
+                className="w-full py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-all text-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ── Account Suspended Modal ── */}
       {evicted && (
         <div className="fixed inset-0 z-[9999] bg-black/60 backdrop-blur-sm flex items-center justify-center p-4">
@@ -158,6 +272,15 @@ const Header = ({ searchKeyword = '', setSearchKeyword = () => { }, hideSearch =
                 <Search strokeWidth={2.5} className='w-6 h-6' />
               </button>
             )}
+
+            {/* Coupons Trigger */}
+            <button
+              onClick={() => setShowCouponsModal(true)}
+              className='text-gray-700 hover:text-emerald-600 hover:scale-110 transition-all duration-300 relative'
+              title='Available Coupons'
+            >
+              <Tag strokeWidth={2.5} className='w-6 h-6' />
+            </button>
 
             {/* Account menu */}
             {isLoggedIn ? (

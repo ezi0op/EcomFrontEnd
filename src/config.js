@@ -1,4 +1,2 @@
-// src/config.js
-// Centralized config for API URLs
-
-export const BASE_URL = import.meta.env.VITE_API_URL;
+export { BASE_URL } from './config/config'
+export { default as api } from './config/axios'
