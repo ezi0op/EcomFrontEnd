@@ -40,6 +40,74 @@ The frontend interface acts as a single-page application (SPA) executing client-
 
 ---
 
+## 📸 User Interface Showcase
+
+### 🛍️ Client-Facing Views
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>✨ Storefront Home & Hero</b><br>
+      <img src="../screenshots/01_storefront_hero.png" alt="Storefront Hero" width="100%">
+    </td>
+    <td width="50%" align="center">
+      <b>📦 Product Grid</b><br>
+      <img src="../screenshots/03_featured_products.png" alt="Featured Products" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>🤖 AI Product Insight & Chat</b><br>
+      <img src="../screenshots/02_ai_insight_modal.png" alt="AI Insight" width="100%">
+    </td>
+    <td width="50%" align="center">
+      <b>⚖️ AI Side-by-Side Compare</b><br>
+      <img src="../screenshots/04_ai_comparison_modal.png" alt="AI Compare" width="100%">
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" align="center">
+      <b>🛒 Shopping Cart & Checkout</b><br>
+      <img src="../screenshots/05_cart_checkout.png" alt="Cart Checkout" width="100%">
+    </td>
+    <td width="50%" align="center">
+      <b>🎟️ Available Coupons Modal</b><br>
+      <img src="../screenshots/06_available_coupons_modal.png" alt="Available Coupons" width="100%">
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<p align="center">
+  <b>🎉 Checkout Confirmation Page</b><br>
+  <img src="../screenshots/07_order_placed_modal.png" alt="Order Success" width="60%">
+</p>
+
+### 🛡️ Administrative Console Views
+
+<table width="100%">
+  <tr>
+    <td width="50%" align="center">
+      <b>📊 Analytics Dashboard Overview</b><br>
+      <img src="../screenshots/08_admin_dashboard.png" alt="Admin Dashboard" width="100%">
+    </td>
+    <td width="50%" align="center">
+      <b>📝 Catalog Inventory List</b><br>
+      <img src="../screenshots/09_admin_product_inventory.png" alt="Admin Catalog" width="100%">
+    </td>
+  </tr>
+</table>
+
+<br>
+
+<p align="center">
+  <b>🎫 Coupon Management Dashboard</b><br>
+  <img src="../screenshots/10_admin_coupon_management.png" alt="Admin Coupons" width="80%">
+</p>
+
+---
+
 ## 📁 Repository Map
 
 ```text
