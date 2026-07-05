@@ -1,115 +1,148 @@
-# 💻 E-Commerce Platform - React Frontend
+# 💻 React Frontend SPA — E-Commerce Application
 
-This is the frontend application of the E-Commerce platform. It is a modern, single-page application built using **React 19**, **Vite 8**, and **Tailwind CSS v4**.
+<div align="center">
 
-## 🛠️ Tech Stack & Libraries
+[![React](https://img.shields.io/badge/React-19.2.4-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8.0.4-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vite.dev/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-v4.2.2-38B2AC?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![React Router](https://img.shields.io/badge/React_Router-v7.14.0-CA4245?style=for-the-badge&logo=reactrouter&logoColor=white)](https://reactrouter.com/)
+[![Axios](https://img.shields.io/badge/Axios-1.15.0-5A29E4?style=for-the-badge&logo=axios&logoColor=white)](https://axios-http.com/)
 
-- **Framework:** React 19 (using Vite 8 for fast building and HMR)
-- **Routing:** React Router v7 (configured with route guards for authenticated spaces)
-- **HTTP Client:** Axios (configured with interceptors to automatically append JWT bearer tokens)
-- **Styling:** Tailwind CSS v4 (configured via `@tailwindcss/vite` plugin for maximum performance)
-- **Icons:** Lucide React & FontAwesome Icons
+*A premium, high-performance web dashboard and storefront designed with Tailwind CSS v4, smooth modal workflows, dynamic filters, and real-time state management.*
+
+</div>
 
 ---
 
-## 📁 Key Directory Structure
+## 🚀 Architectural Overview
+
+The frontend interface acts as a single-page application (SPA) executing client-side routing and communicating with the Spring Boot server via secure asynchronous REST endpoints.
+
+```text
+       ┌────────────────────────┐
+       │   React 19 SPA (Client)│
+       └───────────┬────────────┘
+                   │
+         [ Axios Interceptor ]
+         (Injects JWT Bearer)
+                   │
+                   ▼  HTTP Request
+       ┌────────────────────────┐
+       │  Spring Boot Backend   │
+       └────────────────────────┘
+```
+
+### 🗝️ Core Frontend Capabilities
+1. **JWT Header Injection**: Global token handler intercepts outgoing requests, attaching authorization headers dynamically.
+2. **Guest Cart Synchronization**: Seamless localStorage cart tracking for guest users that syncs with database storage upon user authorization.
+3. **AI Chat & Modal Workflows**: Live interaction frames allowing side-by-side product advice, description summaries, and specs checkups.
+4. **Adaptive View System**: Smart, unified view routes that dynamically present standard user interfaces or Admin Dashboard management modules.
+
+---
+
+## 📁 Repository Map
 
 ```text
 FrontEnd/
-├── public/                 # Static assets (images, icons)
+├── public/                 # Static assets and icons
 ├── src/
 │   ├── Components/
-│   │   ├── Admin/          # Dashboard, Users, Products, Coupons, and Orders administration
-│   │   │   ├── AdminCoupons.jsx
-│   │   │   ├── AdminDashboard.jsx
-│   │   │   ├── AdminOrders.jsx
-│   │   │   ├── AdminOverview.jsx
-│   │   │   ├── AdminProducts.jsx
-│   │   │   └── AdminUsers.jsx
-│   │   ├── Page1/          # Storefront views & Customer interface components
-│   │   │   ├── AI/         # AI insight, advice, and comparison modals
-│   │   │   ├── Cart.jsx    # Guest & logged-in user cart management
-│   │   │   ├── Orders.jsx  # Order placement history and invoice downloads
-│   │   │   ├── Header.jsx  # Context-aware navigation and search bar
-│   │   │   ├── Mid.jsx     # Product list with filters (category, price)
-│   │   │   └── Footer.jsx  # Standard layout footer
-│   │   ├── Page2/          # Alternate storefront and product components
-│   │   ├── User/           # Authentication components (Login, Registration, Profile update)
-│   │   └── PrivateRoute.jsx# Route protector guard for authorized routes
+│   │   ├── Admin/          # Administrative dashboards & metrics
+│   │   │   ├── AdminCoupons.jsx   # Coupon creator and active triggers
+│   │   │   ├── AdminDashboard.jsx # Entry view layout
+│   │   │   ├── AdminOrders.jsx    # Status modification panel
+│   │   │   ├── AdminOverview.jsx  # Chart metrics and aggregate statistics
+│   │   │   ├── AdminProducts.jsx  # Complete catalog modification interface
+│   │   │   └── AdminUsers.jsx     # User audit and access controls
+│   │   ├── Page1/          # Storefront views & customer interactions
+│   │   │   ├── AI/                # AI modal modules (advice, summary, comparison)
+│   │   │   │   ├── AiInsightModal.jsx
+│   │   │   │   ├── CompareBar.jsx
+│   │   │   │   └── CompareModal.jsx
+│   │   │   ├── Common/            # Reusable UI elements (toast alerts)
+│   │   │   ├── Cart.jsx           # Guest & User Cart page layouts
+│   │   │   ├── Orders.jsx         # User order log & iText PDF invoice request
+│   │   │   ├── Header.jsx         # Global context-aware navigation
+│   │   │   ├── Mid.jsx            # Main storefront listing with filter modules
+│   │   │   └── Footer.jsx         # Standard catalog page footer
+│   │   ├── Page2/          # Experimental storefront listings
+│   │   ├── User/           # Authentication controls (Login, Signup, Profile)
+│   │   └── PrivateRoute.jsx# Client-side router guard for private accounts
 │   ├── config/
-│   │   ├── axios.js        # Axios instance configured with Authorization interceptors
-│   │   └── config.js       # Base API URL provider
-│   ├── App.jsx             # Root routing layout definition
-│   ├── index.css           # Global CSS & Tailwind imports
-│   └── main.jsx            # Application mount point
-├── package.json            # Scripts & package configurations
-└── vite.config.js          # Vite and build plugins configuration
+│   │   ├── axios.js        # Global Axios configs & JWT request interceptors
+│   │   └── config.js       # Base server address definitions
+│   ├── App.jsx             # React Router routing layout setup
+│   ├── index.css           # Global custom style overrides
+│   └── main.jsx            # React client mounting logic
+├── package.json            # Target version dependencies & runner scripts
+└── vite.config.js          # Vite compiler and tailwind integration plugin configurations
 ```
 
 ---
 
-## ⚡ Development & Setup
+## ⚡ Setup & Run
 
-### Prerequisites
-- **Node.js** v18+ and **npm** installed.
-- Backend server running (by default expected at `http://localhost:8080`).
+### 📋 Prerequisites
+- **Node.js** v18 or higher
+- **npm** (Node Package Manager)
 
-### Installation
+### 💻 Local Development Setup
 
-1. Navigate to the frontend directory:
-   ```bash
-   cd FrontEnd
-   ```
+1.  Navigate into the `FrontEnd` folder:
+    ```bash
+    cd FrontEnd
+    ```
 
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
 
-3. Configure Environment Variables (Optional):
-   Create a `.env` file in the root of the `FrontEnd` directory to point to your backend:
-   ```env
-   VITE_API_URL=http://localhost:8080
-   ```
+3.  Configure Environment Variables:
+    If your backend API server runs on a different port than `http://localhost:8080`, create a `.env` file:
+    ```env
+    VITE_API_URL=http://your-custom-backend-domain:port
+    ```
 
-4. Start the local development server:
-   ```bash
-   npm run dev
-   ```
-   *The server runs locally at: `http://localhost:5173`*
-
----
-
-## 🔑 State Management & Auth Flow
-
-1. **Authentication Token:**
-   Upon successful login through [Login.jsx](file:///c:/Users/itspa/FirstBitSolutions/E-Commerce-Project/FrontEnd/src/Components/User/Login.jsx), the JWT string and User Role are stored in `localStorage`:
-   ```javascript
-   localStorage.setItem('token', data.token);
-   localStorage.setItem('userRole', data.role);
-   ```
-
-2. **API Requests Interceptor:**
-   All outgoing API requests automatically have the JWT bearer token attached. This logic is handled globally inside [axios.js](file:///c:/Users/itspa/FirstBitSolutions/E-Commerce-Project/FrontEnd/src/config/axios.js):
-   ```javascript
-   axiosInstance.interceptors.request.use((config) => {
-     const token = localStorage.getItem('token');
-     if (token) {
-       config.headers.Authorization = `Bearer ${token}`;
-     }
-     return config;
-   });
-   ```
-
-3. **Cart Persistence:**
-   Guest cart items are saved in `localStorage` until the customer logs in. Once logged in, the guest cart is synchronized with the backend database so the user doesn't lose selected items.
+4.  Start local development server:
+    ```bash
+    npm run dev
+    ```
+    
+    *Open [http://localhost:5173](http://localhost:5173) in your browser.*
 
 ---
 
-## 📦 Production Build
+## 🔒 Session Security & API Integration
 
-To build the project for production (compiles and minifies assets):
+### JWT Storage
+After a customer logs in successfully via [Login.jsx](file:///c:/Users/itspa/FirstBitSolutions/E-Commerce-Project/FrontEnd/src/Components/User/Login.jsx), token headers are kept in local storage:
+```javascript
+localStorage.setItem('token', data.token);
+localStorage.setItem('userRole', data.role);
+```
+
+### Axios Interceptor
+Incoming tokens are appended dynamically to all API calls through the configured instance in [axios.js](file:///c:/Users/itspa/FirstBitSolutions/E-Commerce-Project/FrontEnd/src/config/axios.js):
+```javascript
+const axiosInstance = axios.create({
+  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8080',
+});
+
+axiosInstance.interceptors.request.use((config) => {
+  const token = localStorage.getItem('token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+```
+
+---
+
+## 📦 Production Builds
+To build optimized and minified production bundles:
 ```bash
 npm run build
 ```
-The production bundle will be generated in the `dist/` directory, ready to be served by web servers or static hosts like Vercel, Netlify, or AWS S3.
+Output files will compile inside the `/dist` directory, ready to be served by server scripts or CDN hosting providers.
